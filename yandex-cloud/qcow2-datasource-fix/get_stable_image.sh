@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export IMG_URL=${IMG_URL:-"https://geo.mirror.pkgbuild.com/images/latest"}
-export IMG_PATH=${IMG_PATH:="./images"}
+export IMG_PATH=${IMG_PATH:=-"./images"}
 export IMG_NAME=${IMG_NAME:-"Arch-Linux-x86_64-cloudimg.qcow2"}
 export IMG_HASH="${IMG_NAME}.SHA256"
 export IMG_SIG="${IMG_NAME}.sig"

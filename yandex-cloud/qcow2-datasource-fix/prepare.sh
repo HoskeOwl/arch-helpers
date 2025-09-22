@@ -8,6 +8,7 @@ export IMG_FILE="${IMG_PATH}/${IMG_NAME}"
 sudo modprobe nbd max_part=2 || { echo "err load nbd"; exit 1; }
 sudo qemu-nbd --connect=/dev/nbd0 "$IMG_FILE" || { echo "err load nbd"; exit 1; }
 sudo fdisk -l /dev/nbd0
+sudo mkdir -p ./mnt
 sudo mount /dev/nbd0p3 ./mnt || { echo "err load nbd"; exit 1; }
 
 # prepare

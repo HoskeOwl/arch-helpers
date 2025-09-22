@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+set -x
+
 # remove history
 rm -f /home/arch/.bash_history
 rm -f /home/arch/.zsh_history
@@ -24,25 +26,20 @@ fi
 
 rm -rf /tmp/*
 
-# remove all packages except installed
-pacman -Sc
-# remove all
-#pacman -Scc
-
 # remove unused packages (only if any exist)
-orphans=$(pacman -Qtdq)
+orphans=$(pacman -Qtdq || true)
 if [ -n "$orphans" ]; then
-    pacman -R $orphans
+    pacman -Rns --noconfirm $orphans
 fi
 
-rm -rf /home/arch/.cache
+grep "arch" /etc/passwd && rm -rf /home/arch/.cache
 rm -rf /root/.cache
 
 #clean sudoers
-rm -f /etc/sudoers.d/90-cloud-init-users
+rm -f /etc/sudoers.d/*
 
 find /var/log -type f -delete
 journalctl --rotate 2>/dev/null
 journalctl --vacuum-time=1s 2>/dev/null
 
-usermod -L arch
+grep "arch" /etc/passwd && usermod -L arch

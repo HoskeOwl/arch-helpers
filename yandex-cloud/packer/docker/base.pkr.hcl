@@ -54,9 +54,9 @@ source "yandex" "archdirty" {
 
   image_description = "arch"
   image_family      = "arch"
-  image_name = "arch-cloud-init-${local.timestamp}"
+  image_name = "arch-docker-${local.timestamp}"
 
-  source_image_family       = "arch-base"
+  source_image_family       = "arch-docker"
   source_image_folder_id = "${var.folder_id}"
 }
 
@@ -106,10 +106,6 @@ First, the destination directory must already exist. If you need to create it, u
   // copy to temp and then move
   provisioner "file" {
     source = "config/etc"
-    destination = "/tmp/config"
-  }
-  provisioner "file" {
-    source = "config/usr"
     destination = "/tmp/config"
   }
   provisioner "file" {
