@@ -106,13 +106,18 @@ export PROFILE="your-yc-profile"
 ### Environment Variables
 
 #### Packer Build (`run.sh`)
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `YC_BUILD_FOLDER_ID` | Yandex Cloud folder ID | Yes |
-| `YC_BUILD_SERVICE_ACCOUNT_SECRET` | Path to service account key file | Yes |
-| `YC_BUILD_SUBNET` | Subnet ID for build instance | Yes |
-| `YC_ZONE` | Availability zone | Yes |
-| `DEBUG` | Enable debug mode (optional) | No |
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `YC_BUILD_FOLDER_ID` | Yandex Cloud folder ID | — | Yes |
+| `YC_BUILD_SERVICE_ACCOUNT_SECRET` | Path to service account key file | — | Yes |
+| `YC_BUILD_SUBNET` | Subnet ID for build instance | — | Yes |
+| `YC_ZONE` | Availability zone | — | Yes |
+| `YC_IMAGE_DESCRIPTION` | Description of the resulting image | `arch` | No |
+| `YC_IMAGE_FAMILY` | Image family of the resulting image | `arch` | No |
+| `YC_IMAGE_NAME` | Name of the resulting image | `arch-docker-<timestamp>` | No |
+| `YC_SOURCE_IMAGE_FAMILY` | Source image family to build from | `arch-docker` | No |
+| `YC_SOURCE_IMAGE_FOLDER_ID` | Folder ID to look up the source image | `$YC_BUILD_FOLDER_ID` | No |
+| `DEBUG` | Enable debug mode | — | No |
 
 #### Image Preparation
 | Variable | Description | Default |

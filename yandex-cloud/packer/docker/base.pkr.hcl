@@ -37,7 +37,39 @@ variable "user"{
   default = "arch"
 }
 
-locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
+variable "image_description" {
+  type    = string
+  default = "${env("YC_IMAGE_DESCRIPTION")}"
+}
+
+variable "image_family" {
+  type    = string
+  default = "${env("YC_IMAGE_FAMILY")}"
+}
+
+variable "image_name" {
+  type    = string
+  default = "${env("YC_IMAGE_NAME")}"
+}
+
+variable "source_image_family" {
+  type    = string
+  default = "${env("YC_SOURCE_IMAGE_FAMILY")}"
+}
+
+variable "source_image_folder_id" {
+  type    = string
+  default = "${env("YC_SOURCE_IMAGE_FOLDER_ID")}"
+}
+
+locals {
+  timestamp              = regex_replace(timestamp(), "[- TZ:]", "")
+  image_description      = var.image_description != "" ? var.image_description : "arch"
+  image_family           = var.image_family != "" ? var.image_family : "arch"
+  image_name             = var.image_name != "" ? var.image_name : "arch-docker-${local.timestamp}"
+  source_image_family    = var.source_image_family != "" ? var.source_image_family : "arch-docker"
+  source_image_folder_id = var.source_image_folder_id != "" ? var.source_image_folder_id : var.folder_id
+}
 
 
 source "yandex" "archdirty" {
@@ -52,12 +84,12 @@ source "yandex" "archdirty" {
   zone                      = "${var.zone}"
   temporary_key_pair_type   = "ed25519"
 
-  image_description = "arch"
-  image_family      = "arch"
-  image_name = "arch-docker-${local.timestamp}"
+  image_description = "${local.image_description}"
+  image_family      = "${local.image_family}"
+  image_name        = "${local.image_name}"
 
-  source_image_family       = "arch-docker"
-  source_image_folder_id = "${var.folder_id}"
+  source_image_family    = "${local.source_image_family}"
+  source_image_folder_id = "${local.source_image_folder_id}"
 }
 
 
